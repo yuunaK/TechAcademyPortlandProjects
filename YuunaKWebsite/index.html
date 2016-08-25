@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+ 
+    <link rel="stylesheet" type="text/css" href="StyleSheet.css"/>
+    <title>Yuuna</title>
+	<meta charset="utf-8" />
+</head>
+<body>
+		<div class="nav">
+			<div class="menu-btn" id="menu-btn">
+			&#9776;
+			</div>
+			<div class="responsive-menu">
+				<ul>
+					<li><a="#" target="_self">About</a></li>
+					<li><a="#" target="_self">Services</a></li>
+					<li><a="#" target="_self">Portfolio</a></li>
+					<li><a="#" target="_self">Blog</a></li>
+					<li><a="#" target="_self">Contact</a></li>
+				</ul>
+			</div>
+		</div>
+
+        <div id='nameText'>
+        <h1>Yuuna Kaparti</h1>
+        <h2>Web Design and Development</h2>
+        </div>
+
+   <script src ="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script type="text/javascript">
+		jQuery(function() {
+			$('.menu-btn').mouseover(function() {
+				$('.responsive-menu').toggle('slow', 'linear');
+			});
+		});
+
+		/*$(document).ready(function(){
+			$('.menu-btn').click(function(){
+				$('.responsive-menu:hidden').hide();
+			});
+
+		});*/
+
+
+	</script>
+
+</body>
+</html>

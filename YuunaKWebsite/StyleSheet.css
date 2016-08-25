@@ -1,0 +1,40 @@
+﻿body {
+    background-image: url("japanese-cherry-trees-324175_1920.jpg");
+    background-position: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+.nav > .menu-btn {
+    margin: 10px 40px;
+    font-size: 2em;
+    z-index: 99;
+}
+.nav .responsive-menu {
+    display: none;
+}
+.expand {
+    display: block !important;
+    position: absolute;
+    top: 3em;
+    right: 3em;
+}
+.nav .responsive-menu > ul  li {
+    list-style-type: none;
+}
+div#nameText {
+    z-index: -5;
+    margin: 100px auto;
+}
+h1,h2 {
+    text-align: center;
+    color: #3a3a3a;
+    font-weight: 100;
+
+}
+h1 {
+    font-size: 42px;
+    margin-bottom: 0;
+}
+h2 {
+    margin-top: 0;
+}

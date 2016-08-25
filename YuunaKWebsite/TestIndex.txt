@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head.
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="StyleSheet.css"/>
+    <title>Yuuna</title>
+	<meta charset="utf-8" />
+</head>
+<body>
+	<header>
+		<div class='mobile-nav">
+			<div class="menu-btn" id="menu-btn">
+				<div></div>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+			<div class="responsive-menu">
+				<ul>
+					<li><a="#" target="_self">About</a></li>
+					<li><a="#" target="_self">Services</a></li>
+					<li><a="#" target="_self">Portfolio</a></li>
+					<li><a="#" target="_self">Blog</a></li>
+					<li><a="#" target="_self">Contact</a></li>
+
+				</ul>
+			</div>
+		</div>
+		
+
+
+	</header>
+        <div>
+        <h1>Yuuna Kaparti</h1>
+        <h2>Web Design and Development</h2>
+        </div>
+
+
+	<script type="text/javascript">
+		jQuery(function($) {
+			$('.menu-btn').mouseover(function() {
+				$('.responsive-menu').toggleClass('expand')
+			})
+		});	
+
+	</script>
+
+</body>
+</html>
