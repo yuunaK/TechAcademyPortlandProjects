@@ -1,7 +1,13 @@
 ﻿body {
     background-image: url("japanese-cherry-trees-324175_1920.jpg");
     background-position: center;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 1.5em;
+}
+.container {
+    background-color: rgba(245,235,225, .5);
+    width: 100vw;
+    height: 100vh;
 }
 
 .nav > .menu-btn {
@@ -27,7 +33,7 @@ div#nameText {
 }
 h1,h2 {
     text-align: center;
-    color: #3a3a3a;
+    color: #5a5a5a;
     font-weight: 100;
 
 }
