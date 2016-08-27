@@ -13,10 +13,16 @@
 .nav > .menu-btn {
     margin: 10px 40px;
     font-size: 2em;
+    color: #5a5a5a;
     z-index: 99;
+    float: left;
 }
 .nav .responsive-menu {
     display: none;
+    float: right;
+}
+.nav {
+    clear: both;
 }
 .expand {
     display: block !important;
@@ -24,12 +30,18 @@
     top: 3em;
     right: 3em;
 }
+
 .nav .responsive-menu > ul  li {
     list-style-type: none;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.5em;
+    font-weight: 100;
+    color: #5a5a5a ;
 }
 div#nameText {
     z-index: -5;
-    margin: 100px auto;
+    margin: 35vh auto;
 }
 h1,h2 {
     text-align: center;
