@@ -36,13 +36,14 @@ class File_Mover(Frame):
     #The first argument,'self', the constructor will take will be an instance of the
     #class File_Mover. The next argument, 'master', is a parameter that will accept
     #the Tk object ('root'), that has been passed to the class File_Mover. The last
-    #two arguments allow the function to accept a variable length of arguments.  The
-    #first parameter, '*args', allows us to accept non-keyworded arguments. "**kwargs"
-    #allows us to accept keyworded arguments.
+    #two arguments allow the function to accept a variable length list of arguments.
+    #The first parameter, '*args', allows us to accept non-keyworded arguments.
+    #"**kwargs" allows us to accept keyworded arguments.
     def __init__(self, master, *args, **kwargs):
 
         #This is a constructor function for the Tk object passed into the class File_Mover.
-        #
+        #We are inside of the class constructor function.  But before we can populate
+        #the frame, we need to create it using the frame constructor function.
         Frame.__init__(self, master, *args, **kwargs)
 
         #we are configuring the Tk() object that has been passed to class File_Mover.
@@ -250,21 +251,36 @@ class File_Mover(Frame):
             #one character long.
             cur.execute("INSERT INTO tbl_DateTime (col_DateTime) VALUES (?) ", (dtInfo,))
             
+            #for loop that inserts the row immediately preceding the last row.  Each row in
+            #the table stores an id and a datetime string.
             for row in cur.execute("SELECT col_DateTime FROM tbl_DateTime \
                                WHERE ID = (SELECT MAX (ID) FROM tbl_DateTime) - 1; "):
+                #assigns the datetime string in row to variable x
                 x = row
+                #prints the datetime string into the entry widget which notifies users
+                #of date and time of last file check
                 self.entry3.insert(0, x)
                 print (x)
 
+            #commits the changes to the table and closes the cursor connection
             conn.commit()
             cur.close()
 
+        #closes the connection to the database.
         conn.close()
     
 
 
 
-    def Close_Window(self, **args):
+    #Closes the window of the File_Mover application. In order for this function to work propertly,
+    #I had to import from tkinter the tk module.  The tk module is distinct from the ttk module.
+    #Using *args allows a variable length for the list of arguments passed to the function.  Useful
+    #because if you multiple objects that need to be closed.
+    def Close_Window(self, *args):
+        #This is a nice ready made popup box that asks the user for input. Depending on user selection
+        #the application will return control to the File_Mover application or quit the application,
+        #destroy the objects that were created when the program was executed and returns control to
+        #the operating system.
         if messagebox.askokcancel("Exit program", "Okay to exit application?"):
             self.quit()
             self.destroy()
@@ -272,14 +288,26 @@ class File_Mover(Frame):
 
         
 
-
+#Main function.  Create a Tk object,an instance of the Tk class, and store it in the variable
+#location identified by "root".  Create an instance of the File_Mover class and store it
+#in the variable location called 'filemover'.  When creating a File_Mover object, pass it
+#a Tk object, 'root'.  By doing this, we will be creating a composition of classes / objects:
+#we make a Tk object and also a File_Mover object. We create a Tk object and pass it to the
+#File_Mover class.
+#Question: what is the relationship between the File_Mover object and the Tk object.  Does the
+#File_Mover object encapsulate and contain the Tk object or is it the other way around - i.e.
+#the Tk object contains and encapsulates the File_Mover object?
+#Once the Tk object 'root' has been created we run the mainloop method on it so that the Python
+#interpreter keeps repeating the steps in the main function until we exit out of the script using
+#Close_Window function.
 def main():
 
     root = Tk()
     filemover = File_Mover(root)
     root.mainloop()
 
-
+#This if statement tells the Python interpreter that if there is a function named main in
+#this script, start at that main function.
 if __name__ == "__main__":
     main()
 
