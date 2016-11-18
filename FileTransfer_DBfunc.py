@@ -6,6 +6,7 @@
 
 
 from tkinter import *
+import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
 
@@ -24,10 +25,25 @@ import sqlite3
 
 
 
+#Create a class and accept a Tk object which is primary enclosing Tk frame that will
+#hold all the other widgets.  So "Frame" is a parameter which will store the instance
+#of Tk we created in the main function, root.
+class File_Mover(Frame):
 
-class File_Mover:
+    #constructor function which will create an instance of the File_Mover Class. The
+    #constructor function is always created using the def __init___ syntax.
+    #This constructor function is an attribute method of the class File_Mover.
+    #The first argument,'self', the constructor will take will be an instance of the
+    #class File_Mover. The next argument, 'master', is a parameter that will accept
+    #the Tk object ('root'), that has been passed to the class File_Mover. The last
+    #two arguments allow the function to accept a variable length of arguments.  The
+    #first parameter, '*args', allows us to accept non-keyworded arguments. "**kwargs"
+    #allows us to accept keyworded arguments.
+    def __init__(self, master, *args, **kwargs):
 
-    def __init__(self, master):
+        #This is a constructor function for the Tk object passed into the class File_Mover.
+        #
+        Frame.__init__(self, master, *args, **kwargs)
 
         #we are configuring the Tk() object that has been passed to class File_Mover.
         master.title("Check for Newly Created and Modified Files")
@@ -108,7 +124,7 @@ class File_Mover:
         self.entry3 = ttk.Entry(self.frame3, width = 30)
         self.entry3.grid(row = 1, column = 0, sticky = 'w')
 
-        self.button_CloseWindow = ttk.Button(self.frame3, text = 'Close', width = 15, command = self.Close_Window)
+        self.button_CloseWindow = ttk.Button(self.frame3, text = 'Close', width = 15, command = lambda: self.Close_Window(*args, **kwargs))
         self.button_CloseWindow.grid(row = 1, column = 3, sticky = 'e', padx = 50)
 
         self.button_checkFiles = ttk.Button(self.frame3, text = 'Check Files', width = 15, command = lambda: self.CheckFiles_Button())
@@ -161,8 +177,6 @@ class File_Mover:
         #datetime class (that is, it is an object) and we can use methods on date_now such as
         #'date_now.hour', 'date_now.day' etc to return int values.
         date_now = datetime.datetime.now()
-        #Convert date_now into a string and store in variable 'currentDT'. Use string slice method to retrieve
-        #needed information
         Current_FileCheck = str(date_now)
         #function call to store current filecheck date and time
         self.Date_Time_DB(Current_FileCheck)
@@ -183,16 +197,14 @@ class File_Mover:
             #But, the correct result is last day of preceding month.
             #yesterday = date_now - d
 
-            if ( date_now.day == int(time_stamp[8:10]) and int(time_stamp[11:13]) <= date_now.hour and int(time_stamp[14:16]) < date_now.minute) or  ( int(Last_FileCheck[8:10]) <= int(time_stamp[8:10]) and int(Last_FileCheck[11:13]) <= int(time_stamp[11:13]) and int(Last_FileCheck[14:16]) < int(time_stamp[14:16])  ):
+            if ( int(time_stamp[8:10]) <= date_now.day and int(time_stamp[11:13]) <= date_now.hour and int(time_stamp[14:16]) <= date_now.minute) or  ( int(Last_FileCheck[9:11]) <= int(time_stamp[8:10]) and int(Last_FileCheck[12:14]) <= int(time_stamp[11:13]) and int(Last_FileCheck[15:17]) <= int(time_stamp[14:16])  ):
                 shutil.move(i, dir2)
                 #print to python shell
                 print ('The following files were moved from FolderA to FolderB.')
-                for y in range(len(text_files)):
-                    print (i)
+                print (i)
                 #print to GUI
                 self.text_display_filepath.insert('1.0', 'The following file was moved from FolderA to FolderB.')
-                for x in range(len(text_files)):
-                    self.text_display_filepath.insert('end + 1 lines', ('\n', i))
+                self.text_display_filepath.insert('end + 1 lines', ('\n', i))
 
         dirlistA = os.listdir(dir1)
         print('Source Directory: ', dir1)
@@ -201,6 +213,7 @@ class File_Mover:
         self.text_display_filepath.insert('end + 1 lines', ('\nSource Directory: ', dir1))
         for x in range(len(dirlistA)):
             self.text_display_filepath.insert('end + 1 lines', ('\n', dirlistA[x]))
+
 
         dirlistB = os.listdir(dir2)
         print('Destination Directory: ', dir2)
@@ -217,13 +230,13 @@ class File_Mover:
         conn = sqlite3.connect('db_DateTime.db')
         with conn:
             cur = conn.cursor()
-            cur.execute("CREATE TABLE IF NOT EXISTS \
-                    tbl_DateTime(ID INTEGER PRIMARY KEY AUTOINCREMENT, \
-                    col_DateTime);")
+            cur.execute("CREATE TABLE IF NOT EXISTS tbl_DateTime ( \
+                        ID INTEGER PRIMARY KEY AUTOINCREMENT, \
+                        col_DateTime); ")
             #This statement inserts values into the table dynamically using a variable.
             #Use keywords INSERT INTO, provide table name and column name and after
             #keyword VALUES, use question marks as placeholder for a variable.
-            #Enclose the SQL query in quotes, use a comman and provide teh variable that
+            #Enclose the SQL query in quotes, use a comma and provide teh variable that
             #will fill the question mark field in parenthesis, make sure to use a comma
             #to make sure that dtInfo is treated as a single unit instead of as a string
             #sequence with every element in the string representing a binding value.
@@ -235,35 +248,27 @@ class File_Mover:
             #the 'img' string is treated as the input sequence. If that string is 74
             #characters long, then Python sees that as 74 separate bind values, each
             #one character long.
-            cur.execute("INSERT INTO tbl_DateTime (col_DateTime) VALUES (?)",
-                        (dtInfo,))
+            cur.execute("INSERT INTO tbl_DateTime (col_DateTime) VALUES (?) ", (dtInfo,))
+            
             for row in cur.execute("SELECT col_DateTime FROM tbl_DateTime \
-                    WHERE ID = (SELECT MAX (ID) FROM tbl_DateTime) - 1; "):
+                               WHERE ID = (SELECT MAX (ID) FROM tbl_DateTime) - 1; "):
                 x = row
                 self.entry3.insert(0, x)
                 print (x)
-        
 
             conn.commit()
             cur.close()
 
-            
         conn.close()
     
 
 
 
-    def Close_Window(self):
-        
-        # this will end the root.mainloop   
-        root.quit()
-
-        #self.master.destroy will destroy the the object.  alternatively,
-        #self.forget() can be used to hide a widget or frame from view.
-        self.master.destroy()
-
-        #returns control to the operating system
-        os.exit(0)
+    def Close_Window(self, **args):
+        if messagebox.askokcancel("Exit program", "Okay to exit application?"):
+            self.quit()
+            self.destroy()
+            os._exit(0)
 
         
 
